@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>todolist</title>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        crossorigin="anonymous">
+</head>
+
+<body>
+    <div id="todolist" class="text-center form-group form-inline">
+        <input class="form-control" type="text" v-model="message" @keyup.13="vclick">
+        <input class="btn btn-success" type="button" value="Add To Do" @click="vclick">
+        <ul class="list-group text-left">
+            <itemlist v-for="(item,index) of list" :item="item" :index="index" @dltclick='dltclick'></itemlist>
+        </ul>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+    <script src="./todolist.js"></script>
+</body>
+
+</html>
