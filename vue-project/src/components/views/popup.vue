@@ -32,16 +32,17 @@ export default {
 
 <style lang="scss" scoped>
   .mask{
+    z-index: 2;
     height: 100%;
     width: 100%;
     position: fixed;
     top: 0;
     background-color: rgba(0, 0, 0, 0.7);
     .frame{
-      width: 360px;
+      width: 400px;
       height: 200px;
       border-radius: 20px;
-      z-index: 2;
+      z-index: 3;
       position: absolute;
       top: 0;
       left: 0;

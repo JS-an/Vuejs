@@ -8,6 +8,10 @@
           <input type="text" id="account" disabled v-model="accountMsg.account">
         </div>
         <div>
+          <label for="nickName">昵称：</label>
+          <input type="text" id="nickName" v-model="accountMsg.nickName">
+        </div>
+        <div>
           <label for="github">GitHub：</label>
           <input type="text" id="github" v-model="accountMsg.github">
         </div>
@@ -80,7 +84,7 @@ export default {
     updateUser () {
       this.$axios.post('/api/users/user/update', this.accountMsg)
         .then((res) => {
-          if (!res.data) {
+          if (res.data === false) {
             this.$router.push({
               name: 'sign'
             })

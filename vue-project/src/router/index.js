@@ -7,13 +7,14 @@ import links from '../view/links.vue'
 import home from '../view/home.vue'
 import page from '../view/index.vue'
 import admin from '../view/admin/admin.vue'
-import adminActicle from '../view/admin/article.vue'
+import adminArticle from '../view/admin/article.vue'
 import adminHome from '../view/admin/home.vue'
 import adminGames from '../view/admin/games.vue'
 import adminLinks from '../view/admin/links.vue'
 import sign from '../view/sign.vue'
 import account from '../view/account.vue'
 import adminAccount from '../view/admin/account.vue'
+import empty from '../components/views/empty.vue'
 
 Vue.use(Router)
 
@@ -32,6 +33,11 @@ export default new Router({
       path: '/sign',
       name: 'sign',
       component: sign
+    },
+    {
+      path: '/empty',
+      name: 'empty',
+      component: empty
     },
     {
       path: '/',
@@ -77,8 +83,8 @@ export default new Router({
       children: [
         {
           path: 'acticle',
-          name: 'adminActicle',
-          component: adminActicle
+          name: 'adminArticle',
+          component: adminArticle
         },
         {
           path: 'home',

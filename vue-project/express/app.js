@@ -26,8 +26,8 @@ app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser())
 app.use(history())
 app.use(express.static(app.get('views')))
-app.listen(3000)
-app.use('/api/users', usersRouter)
+// app.listen(3000)
+app.use('/users', usersRouter)
 app.use('/', adminRouter)
 
 // catch 404 and forward to error handler

@@ -97,7 +97,7 @@ export default {
       if (this.page > 1 && this.page < this.totalPage) {
         this.isprev = false
         this.isnext = false
-      } else if (this.page === 1 && this.page === this.totalPage) {
+      } else if (this.page === 1 && (this.page === this.totalPage || this.totalPage === 0)) {
         this.isprev = true
         this.isnext = true
       } else if (this.page === 1) {

@@ -71,6 +71,7 @@ module.exports.updateUser = (req, res, next) => {
     .then((doc) => {
       doc.github = req.body.github
       doc.web = req.body.web
+      doc.nickName = req.body.nickName
       doc.save()
       res.end()
     })
@@ -137,6 +138,30 @@ module.exports.isAdmin = (req, res, next) => {
   }
 }
 
+// 得到友链
+module.exports.getLinks = (req, res, next) => {
+  User.getLinks()
+    .then((doc) => {
+      res.json(doc)
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+}
+
+// 是否展示链接
+module.exports.isShow = (req, res, next) => {
+  User.getUserByAccount(req.body.account)
+    .then((doc) => {
+      doc.show = !doc.show
+      doc.save()
+      res.end()
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+}
+
 // 判断token与管理员等级
 function isRole (req, res) {
   let token = req.cookies.token
@@ -167,14 +192,3 @@ function signInAccount (doc, data) {
     throw new Error('密码错误')
   }
 }
-
-// 更新Token
-// function updateToken (accountMsg, res) {
-//   let {account, role} = accountMsg
-//   let newToken = sign.signToken({account, role})
-//   res.cookie('token', newToken, { httpOnly: true })
-//   User.getUserByAccount(account).then((doc) => {
-//     doc.token = newToken
-//     doc.save()
-//   })
-// }

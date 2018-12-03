@@ -37,7 +37,10 @@ export default {
             if (typeof (res.data) === 'string' && res.data.length > 0) {
               alert(res.data)
             } else {
-              this.$router.go(0)
+              this.$router.replace({
+                name: 'empty',
+                query: {name: 'adminArticle'}
+              })
             }
           })
       }
@@ -50,7 +53,10 @@ export default {
             if (typeof (res.data) === 'string' && res.data.length > 0) {
               alert(res.data)
             } else {
-              this.$router.go(0)
+              this.$router.replace({
+                name: 'empty',
+                query: {name: 'adminArticle'}
+              })
             }
           })
       }
@@ -65,7 +71,10 @@ export default {
             if (typeof (res.data) === 'string' && res.data.length > 0) {
               alert(res.data)
             } else {
-              this.$router.go(0)
+              this.$router.replace({
+                name: 'empty',
+                query: {name: 'adminArticle'}
+              })
             }
           })
       }

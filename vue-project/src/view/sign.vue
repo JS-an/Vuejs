@@ -5,7 +5,7 @@
         <li :class="{active: type === 'Login'}" @click="type = 'Login'">Login</li>
         <li :class="{active: type === 'Register'}" @click="type = 'Register'">Register</li>
       </ul>
-      <div class="login-msg">
+      <div class="login-msg" @keyup.enter="submit">
         <h2 class="login-title">{{type}}</h2>
         <input v-model="account" name="account" type="text" placeholder="Account" @input="isAccountRule">
         <input v-model="password" name="password" type="password" placeholder="Password" @input="isAccountRule">

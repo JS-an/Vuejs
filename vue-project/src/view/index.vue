@@ -1,8 +1,10 @@
 <template>
   <div class="three-col">
     <sidebar ref="sidebar" :class="['sidebar',{'show-sidebar':open}]"></sidebar>
-    <div ref="btn" :class="['btn']" @click="isOpen">
-      <div :class="['arrow',{'arrow-rotate':open}]"></div>
+    <div class="b">
+      <div ref="btn" :class="['btn']" @click="isOpen">
+        <div :class="['arrow',{'arrow-rotate':open}]"></div>
+      </div>
     </div>
     <div id="top" ref="main" :class="['main']" @click="closeSidebar">
       <router-view class="tab-anima"></router-view>
@@ -51,35 +53,39 @@ export default {
     width: 220px;
   }
   /* 侧边栏按钮*/
-  .btn{
-    position: relative;
-    width: 30px;
-    height: 120px;
-    border-radius: 0 30px 30px 0;
-    background-color: #eee;
+  .b{
+    z-index: 2;
     align-self: center;
-    cursor: pointer;
-    &:hover{
-      background-color: #555;
-      /* 侧边栏按钮箭头*/
-      .arrow{
-      border-color: #fff;
-      }
-    }
-    /* 侧边栏箭头 */
-    .arrow{
+    transform: translateY(-60px);
+    .btn{
       position: absolute;
-      top: calc(50% - 5px);
-      width: 20px;
-      height: 20px;
-      border-top: 2px solid #000;
-      border-right: 2px solid #000;
-      transform: rotate(45deg);
-      transition: transform .3s;
-      transform-origin: 75% 25%;
-    }
-    .arrow-rotate{
-      transform: rotate(225deg);
+      width: 30px;
+      height: 120px;
+      border-radius: 0 30px 30px 0;
+      background-color: #eee;
+      cursor: pointer;
+      &:hover{
+        background-color: #555;
+        /* 侧边栏按钮箭头*/
+        .arrow{
+        border-color: #fff;
+        }
+      }
+      /* 侧边栏箭头 */
+      .arrow{
+        position: absolute;
+        top: calc(50% - 5px);
+        width: 20px;
+        height: 20px;
+        border-top: 2px solid #000;
+        border-right: 2px solid #000;
+        transform: rotate(45deg);
+        transition: transform .3s;
+        transform-origin: 75% 25%;
+      }
+      .arrow-rotate{
+        transform: rotate(225deg);
+      }
     }
   }
   /* 内容视图 */

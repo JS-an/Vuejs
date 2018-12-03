@@ -1,7 +1,5 @@
 <template>
-  <div>
-    <p>{{msg}}</p>
-  </div>
+  <div class="img"><img src="/static/img/universe.jpg" alt=""></div>
 </template>
 
 <script>
@@ -9,16 +7,15 @@ export default {
   name: 'home',
   data () {
     return {
-      msg: 'home'
     }
   }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-* {
-  color: black;
-  font-size: 30px;
+<style lang="scss" scoped>
+.img{
+  height: 100%;
+  overflow: hidden;
 }
 </style>

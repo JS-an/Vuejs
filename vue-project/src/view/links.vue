@@ -1,6 +1,22 @@
 <template>
-  <div>
-    <p>{{msg}}</p>
+  <div class="page">
+    <div class="page-links">
+      <h2>名人堂</h2>
+      <div class="show" @click="isShow">PY安排上名人堂</div>
+      <ul class="links">
+        <li :key="index" v-for="(link, index) in linksMsg" class="link">
+          <div class="link-img"><img src="/static/icon/kl.jpg" alt=""></div>
+          <div class="link-msg">
+            <h4>{{link.nickName}}</h4>
+            <p>简介</p>
+            <p>
+              <a :href="link.github" target="_blank">GitHub</a>
+              <a :href="link.web" target="_blank">个人网站</a>
+            </p>
+          </div>
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
@@ -9,12 +25,114 @@ export default {
   name: 'links',
   data () {
     return {
-      msg: 'Links'
+      linksMsg: Object
     }
+  },
+  methods: {
+    getLinks () {
+      this.$axios.get('/api/users/links/getLinks')
+        .then((res) => {
+          this.linksMsg = res.data
+        })
+    },
+    isShow () {
+      this.$popup('是否进行PY交易', this.show)
+    },
+    show () {
+      this.$axios.post('api/users/links/show', {account: this.$store.state.accountMsg.account})
+        .then(() => {
+          // 空白跳转实现刷新组件
+          this.$router.replace({
+            name: 'empty',
+            query: {name: 'links'}
+          })
+        })
+    }
+  },
+  mounted () {
+    this.getLinks()
   }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style lang="scss" scoped>
+.page{
+  position: relative;
+  .page-links{
+    max-width: 1024px;
+    position: absolute;
+    margin: auto;
+    left: 0;
+    right: 0;
+    h2{
+      margin-top: 20px;
+      color: #9287e7;
+      text-align: center;
+    }
+    .show{
+      width: 150px;
+      height: 30px;
+      line-height: 30px;
+      margin: auto;
+      margin-top: 20px;
+      text-align: center;
+      border: 1px solid gray;
+      border-radius: 10px;
+      cursor: pointer;
+      &:hover{
+        background-color: gray;
+        color: white;
+      }
+    }
+    .links{
+      margin-top: 30px;
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      list-style: none;
+      .link{
+        display: flex;
+        width: 450px;
+        height: 100px;
+        border: 1px solid #c7c7c7;
+        border-radius: 5px;
+        margin: 10px;
+        .link-img{
+          position: relative;
+          margin: 10px;
+          width: 80px;
+          height: 80px;
+          border: 1px solid #c7c7c7;
+          border-radius: 5px;
+          overflow: hidden;
+          img{
+            max-width: 80px;
+            position: absolute;
+            top: 0;
+            right: 0;
+            left: 0;
+            bottom: 0;
+            margin: auto;
+          }
+        }
+        .link-msg{
+          display: flex;
+          flex-direction: column;
+          justify-content: space-around;
+          p{
+            a{
+              margin-right: 50px;
+              color: #60acfc;
+              text-decoration: none;
+              &:hover{
+                color: #ff7c7c;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
 </style>

@@ -10,6 +10,10 @@ var userSchema = new mongoose.Schema({
   password: {
     type: String
   },
+  nickName: {
+    type: String,
+    default: ''
+  },
   role: {
     type: Number,
     default: 0
@@ -21,6 +25,10 @@ var userSchema = new mongoose.Schema({
   token: {
     type: String,
     default: ''
+  },
+  show: {
+    type: Boolean,
+    default: false
   },
   github: {
     type: String,
@@ -60,6 +68,18 @@ userSchema.statics = {
           } else {
             resolve(false)
           }
+        }
+      })
+    })
+  },
+  // 得到友链信息
+  getLinks () {
+    return new Promise((resolve, reject) => {
+      this.find({show: true}, {_id: 0, nickName: 1, github: 1, web: 1}).exec((err, doc) => {
+        if (err) {
+          reject(err)
+        } else {
+          resolve(doc)
         }
       })
     })

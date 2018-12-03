@@ -27,4 +27,7 @@ router.post('/user/updatePassword', User.isToken, User.updatePassword)
 router.get('/user/account', User.getUser)
 // router.get('/user/accountList', User.getUserList)
 
+// 友链
+router.get('/links/getLinks', User.getLinks)
+router.post('/links/show', User.isToken, User.isShow)
 module.exports = router
