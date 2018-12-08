@@ -92,6 +92,7 @@ export default {
   .main{
     flex: 1;
     overflow-x: hidden;
+    background-image: url('/static/img/start.jpg');
   }
 }
 

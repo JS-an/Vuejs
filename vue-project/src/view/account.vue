@@ -1,6 +1,13 @@
 <template>
   <div class="box">
     <div class="page">
+      <div class="page-img">
+        <div class="preview">
+          <img :src="imgUrl || user.head" alt="">
+        </div>
+        <input ref="fileData" type="file" @change="isChange">
+        <button @click="updateHead">上传</button>
+      </div>
       <div class="page-msg">
         <h2>个人信息</h2>
         <div>
@@ -20,12 +27,16 @@
           <input type="text" id="web" v-model="accountMsg.web">
         </div>
         <div>
+          <label for="information">简介：</label>
+          <input type="text" id="information" v-model="accountMsg.information" @input="limitLength">
+        </div>
+        <div>
           <label></label>
           <input class="btn" type="button" value="保存修改" @click="isUpdateUser">
         </div>
       </div>
-      <div class="page-psw">
-        <h2>修改密码</h2>
+      <div :class="{'page-psw': true, show: show}">
+        <h2><span @click="show = !show"><img src="/static/icon/jia.png" v-show="show"><img src="/static/icon/jian.png" v-show="!show"></span>&nbsp;修改密码</h2>
         <div>
           <label for="oldpsw">原密码：</label>
           <input type="password" id="oldpsw" v-model="oldpsw">
@@ -43,9 +54,6 @@
           <input class="btn" type="button" value="修改密码" @click="isUpdatePassword">
         </div>
       </div>
-      <div class="page-img">
-
-      </div>
     </div>
   </div>
 </template>
@@ -55,13 +63,17 @@ export default {
   name: 'account',
   data () {
     return {
-      accountMsg: Object,
+      accountMsg: Object, // 页面信息
+      fd: new FormData(), // 表单数据
       oldpsw: '',
       newpsw: '',
-      againpsw: ''
+      againpsw: '',
+      show: true,
+      imgUrl: null
     }
   },
   computed: {
+    // 用户信息
     user () {
       return this.$store.state.accountMsg
     }
@@ -80,9 +92,21 @@ export default {
           this.accountMsg = res.data
         })
     },
+    // 上传头像
+    updateHead () {
+      if (this.fd.has('file')) {
+        this.$axios('/api/users/user/updateHead', {method: 'post', data: this.fd, headers: {'Conten-Type': 'multipart/form-data'}})
+          .then((res) => {
+            alert('更新成功')
+            this.$router.go(0)
+          })
+      } else {
+        alert('图片不能为空')
+      }
+    },
     // 更新用户信息
     updateUser () {
-      this.$axios.post('/api/users/user/update', this.accountMsg)
+      this.$axios.post('/api/users/user/updateUser', this.accountMsg)
         .then((res) => {
           if (res.data === false) {
             this.$router.push({
@@ -93,6 +117,7 @@ export default {
           }
         })
     },
+    // 更新密码
     updatePassword () {
       this.$axios.post('/api/users/user/updatePassword', {account: this.accountMsg.account, oldpsw: this.oldpsw, newpsw: this.newpsw})
         .then((res) => {
@@ -115,6 +140,53 @@ export default {
         this.$popup('是否修改密码', this.updatePassword)
       } else {
         alert('两次新密码不一致')
+      }
+    },
+    // 头像预览
+    isChange (e) {
+      this.fd.delete('file')
+      this.fd.delete('account')
+      let files = this.$refs.fileData.files[0]
+      if (!files) {
+        return false
+      }
+      let reader = new FileReader()
+      reader.readAsDataURL(files)
+      reader.onload = (e) => {
+        this.compress(e.target.result).then((url) => {
+          this.imgUrl = url
+          console.log(this.fd.getAll('file'))
+        })
+      }
+    },
+    // 压缩图片
+    compress (src) {
+      return new Promise((resolve, reject) => {
+        let opt = {
+          w: 158,
+          h: 158,
+          quality: 0.92
+        }
+        let img = new Image()
+        img.src = src
+        let canvas = document.createElement('canvas')
+        let cxt = canvas.getContext('2d')
+        canvas.width = opt.w
+        canvas.height = opt.h
+        img.onload = () => {
+          cxt.drawImage(img, 0, 0, img.width, img.height, 0, 0, opt.w, opt.h)
+          canvas.toBlob((blob) => {
+            this.fd.append('file', blob)
+            this.fd.append('account', JSON.stringify(this.accountMsg.account))
+            resolve(canvas.toDataURL('image/jpeg', opt.quality))
+          })
+        }
+      })
+    },
+    // 限制字数
+    limitLength () {
+      if (this.accountMsg.information.length > 50) {
+        this.accountMsg.information = this.accountMsg.information.slice(0, 50)
       }
     }
   },
@@ -142,7 +214,6 @@ export default {
     background-color: white;
     border-radius: 6px;
     .page-msg, .page-psw{
-      color: red;
       div{
         margin-top: 20px;
         label{
@@ -169,9 +240,50 @@ export default {
     }
     .page-psw{
       margin-top: 50px;
+      h2{
+        img{
+          cursor: pointer;
+          float: left;
+          height: 31px;
+        }
+      }
     }
     .page-img{
-      color: red;
+      width: 200px;
+      position: absolute;
+      right: 0;
+      .preview{
+        width: 160px;
+        height: 160px;
+        margin: 20px 0;
+        border: 1px solid #ccc;
+        border-radius: 80px;
+        overflow: hidden;
+        img{
+          width: 160px;
+        }
+      }
+      input{
+        width: 180px;
+        font-size: 16px;
+      }
+      button{
+        width: 180px;
+        height: 30px;
+        margin-top: 23px;
+        outline: none;
+        border-radius: 5px;
+        border: 1px solid #e7e7e7;
+        background-color: #60acfc;
+        &:hover{
+          color: white;
+          background-color: #ff7c7c;
+        }
+      }
+    }
+    .show{
+      overflow: hidden;
+      height: 50px;
     }
   }
 }

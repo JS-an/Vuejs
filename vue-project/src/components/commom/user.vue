@@ -1,15 +1,16 @@
 <template>
   <div class="user">
     <div class="user-img" @click="show = !show">
-      <img src="/static/icon/up.png" alt="icon">
+      <img v-if="!user" :src="'/static/icon/up.png'" alt="icon">
+      <img v-if="user" :src="user.head" alt="icon">
     </div>
     <ul v-show="show" class="user-handle">
-      <li v-if="!accountMsg" @click="toSign">登录 / 注册</li>
-      <li v-if="accountMsg" @click="toAccount">个人中心</li>
-      <li v-if="accountMsg" @click="exit">用户注销</li>
+      <li v-if="!user" @click="toSign">登录 / 注册</li>
+      <li v-if="user" @click="toAccount">个人中心</li>
+      <li v-if="user" @click="exit">用户注销</li>
     </ul>
     <div class="user-name">
-      {{accountMsg.account}}
+      {{user.account}}
     </div>
   </div>
 </template>
@@ -23,7 +24,7 @@ export default {
     }
   },
   computed: {
-    accountMsg () {
+    user () {
       return this.$store.state.accountMsg
     }
   },
@@ -39,7 +40,7 @@ export default {
       })
     },
     exit () {
-      this.$axios.post('/api/users/user/exit', {account: this.accountMsg.account})
+      this.$axios.post('/api/users/user/exit', {account: this.user.account})
         .then((res) => {
           this.$store.state.accountMsg = Object
           alert(res.data)

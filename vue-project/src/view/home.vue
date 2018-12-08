@@ -1,5 +1,5 @@
 <template>
-  <div class="img"><img src="/static/img/universe.jpg" alt=""></div>
+  <div class="img"></div>
 </template>
 
 <script>

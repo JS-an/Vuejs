@@ -11,7 +11,8 @@ var history = require('connect-history-api-fallback')
 var app = express()
 
 // view engine setup
-mongoose.connect('mongodb://webUser:13750014932@159.138.26.196:27017/robot', {useNewUrlParser: true}, function (err) {
+var url = process.env.NODE_ENV === 'production' ? 'mongodb://webUser:13750014932@159.138.26.196:27017/robot' : 'mongodb://127.0.0.1:27017/robot'
+mongoose.connect(url, {useNewUrlParser: true, autoIndex: false}, function (err) {
   if (err) {
     console.log(err)
   } else {
@@ -25,6 +26,8 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser())
 app.use(history())
+
+// 前端
 app.use(express.static(app.get('views')))
 // app.listen(3000)
 app.use('/users', usersRouter)
@@ -43,7 +46,7 @@ app.use(function (err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500).json({msg: err})
-  res.render('error')
+  res.render('views')
 })
 
 module.exports = app

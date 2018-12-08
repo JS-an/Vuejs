@@ -1,7 +1,6 @@
 <template>
   <div class="games">
     <div>
-      {{msg}}
       <iframe src="https://js-an.github.io/HTML5/canvasClock/canvasClock.html"></iframe>
     </div>
   </div>

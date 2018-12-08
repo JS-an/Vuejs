@@ -52,6 +52,7 @@ export default {
       margin: auto;
       padding: 10px;
       border: 1px solid black;
+      background-color: #e7e7e7;
       border-radius: 6px;
       word-wrap: break-word;
       .back-prev-page{

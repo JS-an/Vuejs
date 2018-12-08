@@ -106,7 +106,7 @@ export default {
       }
     }
     .articleshow{
-      background-color: rgba(128, 128, 128, 0.5);
+      background-color: rgba(128, 128, 128, 0.3);
     }
   }
   .article-main{

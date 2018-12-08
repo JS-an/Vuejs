@@ -4,8 +4,7 @@ var sign = require('../common/sign')
 
 var userSchema = new mongoose.Schema({
   account: {
-    type: String,
-    unique: true
+    type: String
   },
   password: {
     type: String
@@ -37,11 +36,15 @@ var userSchema = new mongoose.Schema({
   web: {
     type: String,
     default: ''
+  },
+  information: {
+    type: String,
+    default: ''
+  },
+  head: {
+    type: String,
+    default: '/static/icon/up.png'
   }
-  // icon: {
-  //   type: String,
-  //   default: '/static/icon/up.png'
-  // }
 },
 {
   versionKey: false
@@ -56,6 +59,18 @@ userSchema.pre('save', function (next) {
 })
 
 userSchema.statics = {
+  // 所有用户
+  getUserList () {
+    return new Promise((resolve, reject) => {
+      this.find({}).exec((err, doc) => {
+        if (err) {
+          reject(err)
+        } else {
+          resolve(doc)
+        }
+      })
+    })
+  },
   // 根据账户寻找
   getUserByAccount (account) {
     return new Promise((resolve, reject) => {
@@ -75,7 +90,7 @@ userSchema.statics = {
   // 得到友链信息
   getLinks () {
     return new Promise((resolve, reject) => {
-      this.find({show: true}, {_id: 0, nickName: 1, github: 1, web: 1}).exec((err, doc) => {
+      this.find({show: true}, {_id: 0, nickName: 1, github: 1, web: 1, account: 1, information: 1, head: 1}).exec((err, doc) => {
         if (err) {
           reject(err)
         } else {
@@ -85,6 +100,9 @@ userSchema.statics = {
     })
   }
 }
+
+userSchema.index({ account: 1 }, { unique: true, sparse: true })
+
 var userModel = mongoose.model('user', userSchema)
 
 module.exports = userModel

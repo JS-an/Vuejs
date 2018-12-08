@@ -5,10 +5,10 @@
       <div class="show" @click="isShow">PY安排上名人堂</div>
       <ul class="links">
         <li :key="index" v-for="(link, index) in linksMsg" class="link">
-          <div class="link-img"><img src="/static/icon/kl.jpg" alt=""></div>
+          <div class="link-img"><img :src="link.head" alt=""></div>
           <div class="link-msg">
             <h4>{{link.nickName}}</h4>
-            <p>简介</p>
+            <p class="information">{{link.information}}</p>
             <p>
               <a :href="link.github" target="_blank">GitHub</a>
               <a :href="link.web" target="_blank">个人网站</a>
@@ -25,7 +25,13 @@ export default {
   name: 'links',
   data () {
     return {
-      linksMsg: Object
+      linksMsg: Object // 页面信息
+    }
+  },
+  computed: {
+    // 用户信息
+    user () {
+      return this.$store.state.accountMsg
     }
   },
   methods: {
@@ -39,7 +45,7 @@ export default {
       this.$popup('是否进行PY交易', this.show)
     },
     show () {
-      this.$axios.post('api/users/links/show', {account: this.$store.state.accountMsg.account})
+      this.$axios.post('api/users/links/show', {account: this.user.account})
         .then(() => {
           // 空白跳转实现刷新组件
           this.$router.replace({
@@ -62,9 +68,12 @@ export default {
   .page-links{
     max-width: 1024px;
     position: absolute;
-    margin: auto;
+    margin: 20px auto;
+    padding: 20px;
     left: 0;
     right: 0;
+    background-color: #f7f7f7;
+    border-radius: 10px;
     h2{
       margin-top: 20px;
       color: #9287e7;
@@ -129,6 +138,11 @@ export default {
                 color: #ff7c7c;
               }
             }
+          }
+          .information{
+            width: 350px;
+            height: 40px;
+            font-size: 14px;
           }
         }
       }

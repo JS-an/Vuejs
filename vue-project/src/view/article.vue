@@ -131,9 +131,12 @@ export default {
   .article-main{
     max-width: 768px;
     position: absolute;
-    margin: auto;
+    margin: 20px auto;
+    padding: 0 20px;
     left: 0;
     right: 0;
+    background-color: #f7f7f7;
+    border-radius: 10px;
     h1{
       text-align: center;
       margin: 40px 0;
