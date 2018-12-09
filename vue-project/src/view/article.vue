@@ -8,7 +8,10 @@
       <ul>
         <li :key="item._id" v-for="item in list" >
           <router-link tag="h2" :to="{name: 'articleMain', params: {id: item._id}}">{{item.title}}</router-link>
-          <div>
+          <div class="img">
+            <img :src="item.cover" alt="">
+          </div>
+          <div class="time">
             <p>创建时间：{{item.createTime}}</p>
             <p>更新时间：{{item.updateTime}}</p>
           </div>
@@ -156,7 +159,7 @@ export default {
       list-style: none;
       margin-bottom: 40px;
       li{
-        height: 300px;
+        height: 400px;
         margin-top: 20px;
         padding: 6px;
         background-color: white;
@@ -173,7 +176,18 @@ export default {
             color: #60acfc;
           }
         }
-        div{
+        .img{
+          height: 300px;
+          overflow: hidden;
+          img{
+            width: 100%;
+            transition: all 1s;
+            &:hover{
+              transform: translateY(calc(300px - 100%));
+            }
+          }
+        }
+        .time{
           font-size: 12px;
         }
       }

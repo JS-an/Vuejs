@@ -1,7 +1,7 @@
 <template>
   <div class="games">
     <div>
-      <iframe src="https://js-an.github.io/HTML5/canvasClock/canvasClock.html"></iframe>
+      该功能暂未展现
     </div>
   </div>
 </template>
@@ -18,13 +18,24 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style lang="scss" scoped>
 .games{
-  font-size: 30px;
-  height: 2000px;
-}
-iframe{
-  width: 1300px;
-  height: 650px;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  div{
+    width: 300px;
+    height: 100px;
+    text-align: center;
+    line-height: 100px;
+    color: gray;
+    font-size: 40px;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+  }
 }
 </style>

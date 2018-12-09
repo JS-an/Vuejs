@@ -1,10 +1,12 @@
 <template>
   <div class="article">
     <div class="article-main">
-      <div class="back-prev-page" @click="backPrevPage"><img src="/static/icon/return.png" alt=""></div>
-      <h1 class="article-title">{{content.title}}</h1>
-      <hr>
-      <div v-html="toHtml"></div>
+      <h1 class="article-title">
+        <div class="back-prev-page" @click="backPrevPage"><img src="/static/icon/return.png" alt=""></div>
+        {{content.title}}
+        <hr>
+      </h1>
+      <div v-html="toHtml" class="article-html"></div>
     </div>
   </div>
 </template>
@@ -50,28 +52,36 @@ export default {
       left: 0;
       right: 0;
       margin: auto;
-      padding: 10px;
-      border: 1px solid black;
+      box-shadow: 0 0 30px 5px gray;
       background-color: #e7e7e7;
       border-radius: 6px;
       word-wrap: break-word;
-      .back-prev-page{
-        width: 30px;
-        height: 60px;
-        position: fixed;
-        transform: translateX(-41px);
+      .article-title{
+        position: sticky;
+        top: 0;
+        z-index: 1;
         background-color: #e7e7e7;
-        border-radius: 60px 0 0 60px;
+        font-size: 26px;
         text-align: center;
-        padding: 18px 0 0 4px;
-        cursor: pointer;
-        &:hover{
-          background-color: rgb(162, 221, 177);
+        .back-prev-page{
+          font-size: 0;
+          margin: 5px;
+          position: absolute;
+          text-align: center;
+          cursor: pointer;
+          img{
+            &:hover{
+              transform: scale(1.2);
+          }
+          }
+        }
+        hr{
+          margin: 5px;
+          border-color: gray;
         }
       }
-      .article-title{
-        text-align: center;
-        margin: 10px;
+      .article-html{
+        padding: 10px;
       }
     }
   }

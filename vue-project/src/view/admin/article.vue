@@ -13,6 +13,7 @@
       <div class="main-up">
         <div class="new-article" @click="popup">写新文章</div>
         <input ref="articleTitle" type="text" v-model="title" placeholder="标题">
+        <input ref="articleCover" type="text" v-model="cover" placeholder="Cover">
       </div>
       <div class="main-down">
         <textarea ref="articleMain" v-model="content" placeholder="写点什么(markdown语法)"></textarea>
@@ -34,6 +35,7 @@ export default {
       checkId: 0,
       show: -1,
       title: '',
+      cover: '',
       content: ''
     }
   },
@@ -60,6 +62,7 @@ export default {
       this.show = i
       this.checkId = article._id
       this.title = article.title
+      this.cover = article.cover
       this.content = article.main
     },
     // 遮罩层事件
@@ -71,6 +74,7 @@ export default {
       this.show = -1
       this.checkId = ''
       this.title = ''
+      this.cover = ''
       this.content = ''
     }
   },
@@ -134,8 +138,8 @@ export default {
         }
       }
       input{
-        position: absolute;
-        width: 300px;
+        position: relative;
+        width: 240px;
         height: 30px;
         border: none;
         outline: none;

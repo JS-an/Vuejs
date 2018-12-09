@@ -11,7 +11,7 @@ export default {
   name: 'games',
   data () {
     return {
-      msg: 'games'
+      msg: '待编辑'
     }
   }
 }
@@ -23,6 +23,7 @@ export default {
   font-size: 30px;
   div{
     color: red;
+    text-align: center;
   }
 }
 </style>

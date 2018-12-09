@@ -11,7 +11,7 @@ export default {
   name: 'home',
   data () {
     return {
-      msg: ''
+      msg: '待编辑'
     }
   }
 }

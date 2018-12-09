@@ -29,7 +29,7 @@ app.use(history())
 
 // 前端
 app.use(express.static(app.get('views')))
-// app.listen(3000)
+
 app.use('/users', usersRouter)
 app.use('/', adminRouter)
 

@@ -31,8 +31,9 @@ export default {
     add () {
       if (this.$parent.$options.name === 'admin-article') {
         const title = this.$parent.$refs.articleTitle.value
+        const cover = this.$parent.$refs.articleCover.value
         const main = this.$parent.$refs.articleMain.value
-        this.$axios.post('/api/users/article/add', {title, main})
+        this.$axios.post('/api/users/article/add', {title, cover, main})
           .then((res) => {
             if (typeof (res.data) === 'string' && res.data.length > 0) {
               alert(res.data)
@@ -65,8 +66,9 @@ export default {
       if (this.$parent.$options.name === 'admin-article') {
         const id = this.$parent.$data.checkId
         const title = this.$parent.$refs.articleTitle.value
+        const cover = this.$parent.$refs.articleCover.value
         const main = this.$parent.$refs.articleMain.value
-        this.$axios.post('/api/users/article/modify', {id, title, main})
+        this.$axios.post('/api/users/article/modify', {id, title, cover, main})
           .then((res) => {
             if (typeof (res.data) === 'string' && res.data.length > 0) {
               alert(res.data)

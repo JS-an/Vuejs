@@ -1,8 +1,8 @@
 <template>
   <div class="page">
     <div class="page-links">
-      <h2>名人堂</h2>
-      <div class="show" @click="isShow">PY安排上名人堂</div>
+      <h1>友链</h1>
+      <div class="show" @click="isShow">Show Me</div>
       <ul class="links">
         <li :key="index" v-for="(link, index) in linksMsg" class="link">
           <div class="link-img"><img :src="link.head" alt=""></div>
@@ -74,13 +74,13 @@ export default {
     right: 0;
     background-color: #f7f7f7;
     border-radius: 10px;
-    h2{
+    h1{
       margin-top: 20px;
       color: #9287e7;
       text-align: center;
     }
     .show{
-      width: 150px;
+      width: 80px;
       height: 30px;
       line-height: 30px;
       margin: auto;
@@ -104,15 +104,18 @@ export default {
         display: flex;
         width: 450px;
         height: 100px;
-        border: 1px solid #c7c7c7;
+        box-shadow: 2px 2px 10px 2px gray;
         border-radius: 5px;
         margin: 10px;
+        transition: transform .5s;
+        &:hover{
+          transform: scale(1.05);
+        }
         .link-img{
           position: relative;
           margin: 10px;
           width: 80px;
           height: 80px;
-          border: 1px solid #c7c7c7;
           border-radius: 5px;
           overflow: hidden;
           img{
@@ -143,6 +146,7 @@ export default {
             width: 350px;
             height: 40px;
             font-size: 14px;
+            color: gray;
           }
         }
       }

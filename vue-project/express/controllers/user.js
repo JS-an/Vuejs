@@ -70,6 +70,7 @@ module.exports.getUser = (req, res, next) => {
 }
 
 // 更新头像且更改文件名
+
 module.exports.updateHead = [
   multer({storage: multer.diskStorage({
     destination: (req, file, cb) => {
@@ -85,11 +86,13 @@ module.exports.updateHead = [
       if (err) {
         console.log(err)
       }
+      console.log('1')
     })
     User.getUserByAccount(data)
       .then((doc) => {
-        doc.head = `http://localhost:3000/users/images/head/${data}.jpg`
+        doc.head = `http://159.138.26.196/api/users/images/head/${data}.jpg`
         doc.save()
+        console.log('2')
         res.end()
       })
   }

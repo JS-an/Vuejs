@@ -11,7 +11,7 @@ export default {
   name: 'links',
   data () {
     return {
-      msg: 'Links'
+      msg: '待编辑'
     }
   }
 }
@@ -23,6 +23,7 @@ export default {
   font-size: 30px;
   div{
     color: red;
+    text-align: center;
   }
 }
 </style>
