@@ -6,7 +6,7 @@
         <input ref="searchText" type="text" placeholder="search" @keydown.enter="searchArticleList">
       </div>
       <ul>
-        <li :key="item._id" v-for="item in list" >
+        <li :key="item._id" v-for="item in list">
           <router-link tag="h2" :to="{name: 'articleMain', params: {id: item._id}}">{{item.title}}</router-link>
           <div class="img">
             <img :src="item.cover" alt="">
@@ -51,12 +51,15 @@ export default {
     getArticleList () {
       this.$axios.get('/api/users/article?q=' + this.q + '&page=' + this.page)
         .then((res) => {
+          // 缓存页数、改变总页数时才更新
           this.isTotal = Math.ceil(res.data.count / 5)
           if (this.totalPage !== this.isTotal) {
             this.totalPage = this.isTotal
             this.isDisabled()
           }
-          this.list = res.data.article
+          // 缓存数据
+          this.list = res.data.article.map(val => val)
+          console.log(this.list[4]._id)
         })
     },
     searchArticleList () {
@@ -65,9 +68,20 @@ export default {
       this.isDisabled()
       this.getArticleList()
     },
+    // 根据页数取缓存数据
+    // isPage (n) {
+    //   if (this.page === 1) {
+    //     this.list = this.newlist.slice(0, 5)
+    //   } else if (n === 1) {
+    //     this.list = this.newlist.slice(5, 10)
+    //   } else {
+    //     this.list = this.newlist.slice(0, 5)
+    //   }
+    // },
     // 上一页
     prevPage () {
       this.page -= 1
+      // this.isPage(0)
       this.$router.push({
         name: 'article',
         query: {
@@ -80,6 +94,7 @@ export default {
     // 下一页
     nextPage () {
       this.page += 1
+      // this.isPage(1)
       this.$router.push({
         name: 'article',
         query: {

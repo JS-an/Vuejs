@@ -1,10 +1,13 @@
 <template>
-  <div v-if="show" class="mask" @click="isShow">
-    <div class="frame" @click.stop>
-      <p class="messge">{{msg}}</p>
-      <div class="btn" @click="isPopupEvent">确定</div>
+  <transition name="fade">
+    <div v-if="show" class="mask" @click="isShow">
+      <div class="frame" @click.stop>
+        <div class="close" @click="isShow">×</div>
+        <p class="messge">{{msg}}</p>
+        <div class="btn" @click="isPopupEvent">确定</div>
+      </div>
     </div>
-  </div>
+  </transition>
 </template>
 
 <script>
@@ -31,6 +34,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+  .fade-enter-active{
+    transition: all .3s;
+  }
+  .fade-enter{
+    opacity: 0;
+  }
+  @keyframes prompt {
+    0% {transform: translateY(-30px);}
+    100% {transform: translateY(0px);}
+  }
   .mask{
     z-index: 2;
     height: 100%;
@@ -41,7 +54,7 @@ export default {
     .frame{
       width: 400px;
       height: 200px;
-      border-radius: 20px;
+      border-radius: 10px;
       z-index: 3;
       position: absolute;
       top: 0;
@@ -55,8 +68,29 @@ export default {
       flex-direction: column;
       justify-content: space-between;
       align-items: center;
+      animation: prompt .3s;
+      .close{
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        width: 24px;
+        height: 24px;
+        color: gray;
+        border: 1px solid gray;
+        border-radius: 12px;
+        font-size: 24px;
+        text-align: center;
+        line-height: 24px;
+        cursor: pointer;
+        transition: all .3s;
+        &:hover{
+          color: red;
+          border-color: red;
+        }
+      }
       .messge{
         font-size: 20px;
+        margin-top: 10px;
       }
       .btn{
         width: 100px;
@@ -66,8 +100,9 @@ export default {
         line-height: 30px;
         text-align: center;
         cursor: pointer;
+        transition: all .3s;
         &:hover{
-          background-color: gray;
+          background-color: #5bc49f;
           color: white;
         }
       }
