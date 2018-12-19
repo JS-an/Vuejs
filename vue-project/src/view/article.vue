@@ -59,7 +59,6 @@ export default {
           }
           // 缓存数据
           this.list = res.data.article.map(val => val)
-          console.log(this.list[4]._id)
         })
     },
     searchArticleList () {

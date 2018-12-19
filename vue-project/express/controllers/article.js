@@ -4,7 +4,8 @@ module.exports.getArticleList = (req, res, next) => {
   let articles = {}
   if (!req.query.q) {
     let p1 = new Promise((resolve, reject) => {
-      Article.find({}).skip(Number.parseInt(req.query.page - 1) * 5).limit(req.query.page && 5).exec((err, article) => {
+      let page = Number.parseInt(req.query.page)
+      Article.find({}).skip((page - 1) * 5).limit(page && 5).exec((err, article) => {
         if (err) {
           reject(console.log(err))
         } else {

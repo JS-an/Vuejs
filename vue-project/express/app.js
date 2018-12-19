@@ -11,7 +11,7 @@ var history = require('connect-history-api-fallback')
 var app = express()
 
 // view engine setup
-var url = process.env.NODE_ENV === 'production' ? 'mongodb://webUser:13750014932@159.138.26.196:27017/robot' : 'mongodb://127.0.0.1:27017/robot'
+var url = process.env.NODE_ENV === 'production' ? 'mongodb://webUser:13750014932@127.0.0.1:27017/robot' : 'mongodb://127.0.0.1:27017/robot'
 mongoose.connect(url, {useNewUrlParser: true, autoIndex: false}, function (err) {
   if (err) {
     console.log(err)
@@ -30,7 +30,7 @@ app.use(history())
 // 前端
 app.use(express.static(app.get('views')))
 
-app.use('/users', usersRouter)
+app.use('/api/users', usersRouter)
 app.use('/', adminRouter)
 
 // catch 404 and forward to error handler

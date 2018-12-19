@@ -122,7 +122,7 @@ export default {
       width: 300px;
       margin: 2px;
       .user{
-        height: 500px;
+        height: 100px;
         margin-top: 5px;
         border: 1px solid #ddd;
         border-radius: 5px;

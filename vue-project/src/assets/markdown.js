@@ -1,6 +1,8 @@
 import marked from 'marked'
-import hljs from 'highlight.js'
+import hljs from 'highlight.js/lib/highlight'
+import javascript from 'highlight.js/lib/languages/javascript'
 import 'highlight.js/styles/monokai-sublime.css'
+hljs.registerLanguage('javascript', javascript)
 
 let rendererMD = new marked.Renderer()
 rendererMD.code = function (code) {
